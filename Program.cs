@@ -14,7 +14,10 @@ namespace thingiverseCLI
             .ConfigureServices(services =>
             {
                 services.AddHttpClient<Services.ThingiverseAPI>();
-                services.AddSingleton(provider => new ConfigurationBuilder().AddJsonFile("appsettings.json").Build());
+                services.AddSingleton(provider => (IConfiguration)new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", true)
+                .AddEnvironmentVariables()
+                .Build());
             })
             .AddCommandsFromThisAssembly()
             .Build()

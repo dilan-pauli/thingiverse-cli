@@ -11,5 +11,4 @@ namespace thingiverseCLI.Services
             this.client = client;
         }
     }
-
 }
