@@ -14,7 +14,7 @@ namespace thingiverseCLI.Services
         private readonly IConfiguration configuration;
         private readonly string apiKey;
 
-        private string AccessParameter { get { return $"?access_token={this.apiKey}"; } }
+        public string AccessParameter { get { return $"?access_token={this.apiKey}"; } }
 
         public ThingiverseAPI(HttpClient client, IConfiguration configuration)
         {

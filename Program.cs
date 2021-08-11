@@ -1,14 +1,19 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.IO;
 using System.Threading.Tasks;
+using thingiverseCLI.Commands;
 using Typin;
 
 namespace thingiverseCLI
 {
     internal class Program
     {
-        private static async Task Main(string[] args) =>
+        private static async Task Main(string[] args)
+        {
+            Directory.CreateDirectory(DefaultCommand.TempPath);
+
             await new CliApplicationBuilder()
             .ConfigureLogging(logger => logger.ClearProviders().AddConsole())
             .ConfigureServices(services =>
@@ -27,5 +32,6 @@ namespace thingiverseCLI
             .AddCommandsFromThisAssembly()
             .Build()
             .RunAsync();
+        }
     }
 }
