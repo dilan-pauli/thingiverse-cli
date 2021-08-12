@@ -65,7 +65,7 @@ namespace thingiverseCLI.Commands
                         foreach (var file in files)
                         {
                             await console.Output.WriteLineAsync($"Downloading {file.name}");
-                            var filePath = Download(files[indexChoosen].name, file.download_url);
+                            var filePath = Download(file.name, file.download_url);
                             await console.Output.WriteLineAsync($"Downloading {file.name} complete @ {filePath}");
                             filesToOpen.Add(filePath);
                         }
