@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>thingiverseCLI</RootNamespace>
     <UserSecretsId>5e4dcb19-a883-4045-874e-2fe2367012c1</UserSecretsId>
+    <AssemblyName>tv</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

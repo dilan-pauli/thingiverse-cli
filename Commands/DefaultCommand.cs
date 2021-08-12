@@ -72,6 +72,7 @@ namespace thingiverseCLI.Commands
                     }
                     else
                     {
+                        indexChoosen--;
                         console.Output.WriteLine($"Downloading and opening {files[indexChoosen].name}");
                         var url = files[indexChoosen].download_url;
                         var filePath = Download(files[indexChoosen].name, url);
