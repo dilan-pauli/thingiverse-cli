@@ -15,7 +15,7 @@ namespace thingiverseCLI
             Directory.CreateDirectory(DefaultCommand.TempPath);
 
             await new CliApplicationBuilder()
-            .ConfigureLogging(logger => logger.ClearProviders().AddConsole())
+            .ConfigureLogging(logger => logger.ClearProviders().AddConsole().SetMinimumLevel(LogLevel.Error))
             .ConfigureServices(services =>
             {
                 services.AddHttpClient<Services.ThingiverseAPI>(c =>
