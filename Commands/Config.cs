@@ -42,7 +42,10 @@ namespace thingiverseCLI.Commands
                     await console.Output.WriteLineAsync($"Your THINGIVERSE_CURA_LOCATION is {config.GetValue<string>(CuraEXELocation)}");
                     break;
                 case ConfigParameters.open:
-                    System.Diagnostics.Process.Start("explorer.exe", TempPath);
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        System.Diagnostics.Process.Start("explorer.exe", TempPath); 
+                    }
                     break;
             }
 
