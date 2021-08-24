@@ -12,7 +12,7 @@ namespace thingiverseCLI
     {
         private static async Task Main(string[] args)
         {
-            Directory.CreateDirectory(DefaultCommand.TempPath);
+            Directory.CreateDirectory(Config.TempPath);
 
             await new CliApplicationBuilder()
             .ConfigureLogging(logger => logger.ClearProviders().AddConsole().SetMinimumLevel(LogLevel.Error))

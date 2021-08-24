@@ -20,9 +20,7 @@ namespace thingiverseCLI.Commands
     {
         private readonly ThingiverseAPI api;
         private readonly ILogger<DefaultCommand> logger;
-        private readonly IConfiguration config;
-
-        public static string TempPath { get { return Path.Combine(Path.GetTempPath(), "thingiverse"); } }
+        private readonly IConfiguration config;        
 
         [CommandParameter(0, Description = "The thing id from to download and open in cura")]
         public int ThingId { get; set; }
@@ -98,12 +96,12 @@ namespace thingiverseCLI.Commands
         /// <returns></returns>
         private string Download(string fileName, string url)
         {
-            string filePath = Path.Combine(TempPath, fileName);
+            string filePath = Path.Combine(Config.TempPath, fileName);
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 try
                 {
-                    wc.DownloadFile(url + this.api.AccessParameter, Path.Combine(TempPath, filePath));
+                    wc.DownloadFile(url + this.api.AccessParameter, Path.Combine(Config.TempPath, filePath));
                     return filePath;
                 }
                 catch (System.Exception ex)

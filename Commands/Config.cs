@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace thingiverseCLI.Commands
     {
         public const string APIKeyEnvironmentVarName = "THINGIVERSE_API_KEY";
         public const string CuraEXELocation = "THINGIVERSE_CURA_LOCATION";
+        public static string TempPath { get { return Path.Combine(Path.GetTempPath(), "thingiverse"); } }
 
         private readonly IConfiguration config;
 
@@ -38,6 +40,9 @@ namespace thingiverseCLI.Commands
                 case ConfigParameters.get:
                     await console.Output.WriteLineAsync($"Your THINGIVERSE_API_KEY is {config.GetValue<string>(APIKeyEnvironmentVarName)}");
                     await console.Output.WriteLineAsync($"Your THINGIVERSE_CURA_LOCATION is {config.GetValue<string>(CuraEXELocation)}");
+                    break;
+                case ConfigParameters.open:
+                    System.Diagnostics.Process.Start("explorer.exe", TempPath);
                     break;
             }
 
@@ -73,6 +78,7 @@ namespace thingiverseCLI.Commands
     public enum ConfigParameters
     {
         set,
-        get
+        get,
+        open
     }
 }
