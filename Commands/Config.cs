@@ -41,12 +41,6 @@ namespace thingiverseCLI.Commands
                     await console.Output.WriteLineAsync($"Your THINGIVERSE_API_KEY is {config.GetValue<string>(APIKeyEnvironmentVarName)}");
                     await console.Output.WriteLineAsync($"Your THINGIVERSE_SLICER_LOCATION is {config.GetValue<string>(SlicerLocation)}");
                     break;
-                case ConfigParameters.open:
-                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        System.Diagnostics.Process.Start("explorer.exe", TempPath); 
-                    }
-                    break;
             }
 
             return;
@@ -81,7 +75,6 @@ namespace thingiverseCLI.Commands
     public enum ConfigParameters
     {
         set,
-        get,
-        open
+        get
     }
 }
