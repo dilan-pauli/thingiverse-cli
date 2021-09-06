@@ -20,7 +20,7 @@ namespace thingiverseCLI.Commands
     {
         private readonly ThingiverseAPI api;
         private readonly ILogger<DefaultCommand> logger;
-        private readonly IConfiguration config;        
+        private readonly IConfiguration config;
 
         [CommandParameter(0, Description = "The thing id from to download and open in slicer")]
         public int ThingId { get; set; }
@@ -46,10 +46,17 @@ namespace thingiverseCLI.Commands
 
                 files = files.OrderByDescending(x => x.download_count).ToList();
 
-                foreach (var file in files)
+                foreach (var file in files.ToList())
                 {
-                    console.Output.WriteLine($"{i} - '{file.name}' Downloaded: {file.download_count} times");
-                    i++;
+                    if (file.name.EndsWith(".stl"))
+                    {
+                        console.Output.WriteLine($"{i} - '{file.name}' Downloaded: {file.download_count} times");
+                        i++;
+                    }
+                    else
+                    {
+                        files.Remove(file);
+                    }
                 }
 
                 var choice = console.Input.ReadLine();
@@ -58,7 +65,7 @@ namespace thingiverseCLI.Commands
                 if (int.TryParse(choice, out indexChoosen))
                 {
                     var filesToOpen = new List<string>();
-                    var folder = thing.name.SanitizeFileName().Replace(' ','_');
+                    var folder = thing.name.SanitizeFileName().Replace(' ', '_');
                     var downloadPath = Directory.CreateDirectory(Path.Combine(Config.TempPath, folder)).FullName;
 
                     if (indexChoosen == 0)
@@ -88,7 +95,7 @@ namespace thingiverseCLI.Commands
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Unable to open thing {this.ThingId}");
+                logger.LogError(ex, $"Unable to open thing {ThingId}");
             }
         }
 
@@ -105,7 +112,7 @@ namespace thingiverseCLI.Commands
             {
                 try
                 {
-                    wc.DownloadFile(url + this.api.AccessParameter, Path.Combine(Config.TempPath, filePath));
+                    wc.DownloadFile(url + api.AccessParameter, Path.Combine(Config.TempPath, filePath));
                     return filePath;
                 }
                 catch (System.Exception ex)
