@@ -14,7 +14,7 @@ namespace thingiverseCLI.Commands
     public class Config : ICommand
     {
         public const string APIKeyEnvironmentVarName = "THINGIVERSE_API_KEY";
-        public const string CuraEXELocation = "THINGIVERSE_CURA_LOCATION";
+        public const string SlicerLocation = "THINGIVERSE_SLICER_LOCATION";
         public static string TempPath { get { return Path.Combine(Path.GetTempPath(), "thingiverse"); } }
 
         private readonly IConfiguration config;
@@ -39,7 +39,7 @@ namespace thingiverseCLI.Commands
                     break;
                 case ConfigParameters.get:
                     await console.Output.WriteLineAsync($"Your THINGIVERSE_API_KEY is {config.GetValue<string>(APIKeyEnvironmentVarName)}");
-                    await console.Output.WriteLineAsync($"Your THINGIVERSE_CURA_LOCATION is {config.GetValue<string>(CuraEXELocation)}");
+                    await console.Output.WriteLineAsync($"Your THINGIVERSE_SLICER_LOCATION is {config.GetValue<string>(SlicerLocation)}");
                     break;
                 case ConfigParameters.open:
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))

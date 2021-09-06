@@ -22,7 +22,7 @@ namespace thingiverseCLI.Commands
         private readonly ILogger<DefaultCommand> logger;
         private readonly IConfiguration config;        
 
-        [CommandParameter(0, Description = "The thing id from to download and open in cura")]
+        [CommandParameter(0, Description = "The thing id from to download and open in slicer")]
         public int ThingId { get; set; }
 
         public DefaultCommand(ThingiverseAPI api, ILogger<DefaultCommand> logger, IConfiguration config)
@@ -79,7 +79,7 @@ namespace thingiverseCLI.Commands
 
                     }
 
-                    Process.Start(config.GetValue<string>(Config.CuraEXELocation), string.Join(' ', filesToOpen));
+                    Process.Start(config.GetValue<string>(Config.SlicerLocation), string.Join(' ', filesToOpen));
                 }
             }
             catch (Exception ex)
