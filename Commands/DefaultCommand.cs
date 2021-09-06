@@ -36,9 +36,11 @@ namespace thingiverseCLI.Commands
         {
             try
             {
+                var thing = await api.GetInfo(ThingId);
+
                 var files = (await api.GetFiles(ThingId)).ToList();
 
-                console.Output.WriteLine($"Got {files.Count()} files, choose file to open - 0 for all");
+                console.Output.WriteLine($"{thing.name} - Got {files.Count()} files, choose file to open - 0 for all");
 
                 int i = 1;
 
@@ -56,14 +58,16 @@ namespace thingiverseCLI.Commands
                 if (int.TryParse(choice, out indexChoosen))
                 {
                     var filesToOpen = new List<string>();
+                    var folder = thing.name.SanitizeFileName().Replace(' ','_');
+                    var downloadPath = Directory.CreateDirectory(Path.Combine(Config.TempPath, folder)).FullName;
 
                     if (indexChoosen == 0)
                     {
-                        console.Output.WriteLine($"Opening all...");
+                        console.Output.WriteLine($"{thing.name} - Opening all...");
                         foreach (var file in files)
                         {
                             await console.Output.WriteLineAsync($"Downloading {file.name}");
-                            var filePath = Download(file.name, file.download_url);
+                            var filePath = Download(file.name, file.download_url, downloadPath);
                             await console.Output.WriteLineAsync($"Downloading {file.name} complete @ {filePath}");
                             filesToOpen.Add(filePath);
                         }
@@ -71,10 +75,10 @@ namespace thingiverseCLI.Commands
                     else
                     {
                         indexChoosen--;
-                        console.Output.WriteLine($"Downloading and opening {files[indexChoosen].name}");
+                        console.Output.WriteLine($"{thing.name} - Downloading and opening {files[indexChoosen].name}");
                         var url = files[indexChoosen].download_url;
-                        var filePath = Download(files[indexChoosen].name, url);
-                        await console.Output.WriteLineAsync($"Downloading {files[indexChoosen].name} complete @ {filePath}");
+                        var filePath = Download(files[indexChoosen].name, url, downloadPath);
+                        await console.Output.WriteLineAsync($"{thing.name} - Downloading {files[indexChoosen].name} complete @ {filePath}");
                         filesToOpen.Add(filePath);
 
                     }
@@ -94,9 +98,9 @@ namespace thingiverseCLI.Commands
         /// <param name="fileName"></param>
         /// <param name="url"></param>
         /// <returns></returns>
-        private string Download(string fileName, string url)
+        private string Download(string fileName, string url, string downloadPath)
         {
-            string filePath = Path.Combine(Config.TempPath, fileName);
+            string filePath = Path.Combine(downloadPath, fileName);
             using (System.Net.WebClient wc = new System.Net.WebClient())
             {
                 try

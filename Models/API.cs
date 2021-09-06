@@ -12,4 +12,9 @@ namespace thingiverseCLI.Models
         public int download_count { get; set; }
         public string download_url { get; set; }
     }
+    
+    public class ThingInfo
+    {
+        public string name {  get; set; }
+    }
 }

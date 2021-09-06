@@ -28,5 +28,10 @@ namespace thingiverseCLI.Services
         {
             return await this.client.GetFromJsonAsync<IEnumerable<ThingFile>>($"/things/{thingId}/files{this.AccessParameter}");
         }
+
+        public async Task<ThingInfo> GetInfo(int thingId)
+        {
+            return await this.client.GetFromJsonAsync<ThingInfo>($"/things/{thingId}{this.AccessParameter}");
+        }
     }
 }
